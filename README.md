@@ -52,17 +52,24 @@ Each script derives addresses from a BIP39 mnemonic using a specific BIP or wall
 | `BIP84_addresses.py` | `m/84'/0'/0'/0/n` | Native SegWit (P2WPKH) | `python BIP84_addresses.py [MNEMONIC] [COUNT]` |
 | `BIP86_addresses.py` | `m/86'/0'/0'/0/n` | Taproot (P2TR) | `python BIP86_addresses.py [MNEMONIC] [COUNT]` |
 
-**Arguments:**
-- `MNEMONIC`: Optional quoted 12- or 24-word BIP39 mnemonic (default: public test mnemonic)
-- `COUNT`: Optional number of addresses to generate (default: 1)
+**Command-line arguments:**
+- Positional: `COUNT` - number of addresses to generate (default: 1)
+- Positional: `MNEMONIC` - quoted 12- or 24-word BIP39 mnemonic (default: public test mnemonic)
+- Flag: `-n COUNT` or `--count COUNT` - number of addresses to generate
 
 **Example:**
 ```bash
-# Generate 5 BIP84 native SegWit addresses
+# Generate 5 BIP84 native SegWit addresses with custom mnemonic
 python BIP84_addresses.py "word1 word2 ... word12" 5
 
-# Use default mnemonic, generate 3 addresses
+# Generate 3 addresses with default mnemonic
 python BIP49_addresses.py 3
+
+# Generate 2 addresses using the -n flag
+python BIP49_addresses.py -n 2
+
+# Generate addresses from custom mnemonic with -n flag
+python BIP49_addresses.py "word1 word2 ... word12" -n 4
 ```
 
 #### All Address Types
