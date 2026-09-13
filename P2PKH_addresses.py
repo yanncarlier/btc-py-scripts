@@ -53,14 +53,20 @@ try:
     print("Generating pre-HD era P2PKH Addresses:")
 
     # Generate a set number of addresses
+    # for i in range(num_addresses):
+    #     # Direct derivation from master key (m -> address)
+    #     # For pre-HD, we use the master key directly
+    #     address_key = bip32_mst
+
+    #     # Construct derivation path
+    #     derivation_path = f"m"
     for i in range(num_addresses):
-        # Direct derivation from master key (m -> address)
-        # For pre-HD, we use the master key directly
-        address_key = bip32_mst
+        address_key = bip32_mst.ChildKey(0).ChildKey(i)
+        derivation_path = f"m/0/{i}"
 
-        # Construct derivation path
-        derivation_path = f"m"
-
+        address = compute_p2pkh_address(
+            address_key.PublicKey().RawCompressed().ToBytes()
+        )
         # Compute P2PKH address from the master key's public key
         address = compute_p2pkh_address(address_key.PublicKey().RawCompressed().ToBytes())
         public_key = address_key.PublicKey().RawCompressed().ToHex()
