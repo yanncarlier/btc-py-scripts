@@ -7,17 +7,15 @@ The first address is normally at m/44'/0'/0'/0/0, but this represents the chain 
 from bip_utils import (
     Bip39SeedGenerator,
     Bip39MnemonicValidator,
-    Bip44,
-    Bip44Coins,
-    Bip44Changes,
     Bip32Secp256k1,
     Hash160,
     Base58Encoder,
 )
 from bip_utils.utils.mnemonic import MnemonicChecksumError
+from derivation_cli import parse_derivation_arguments
 
 # Example BIP39 mnemonic seed phrase
-mnemonic = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about"
+mnemonic, num_addresses = parse_derivation_arguments("Generate BIP44 external chain P2PKH addresses from a BIP39 mnemonic.")
 passphrase = ""  # Optional passphrase (default is empty string; can be changed by user)
 
 
@@ -52,7 +50,6 @@ try:
     print("Generating BIP44 external chain Addresses (m/44'/0'/0'/0):")
 
     # Generate a set number of addresses
-    num_addresses = 1
     for i in range(num_addresses):
         # Derive using BIP44 external chain path: m/44'/0'/0'/0
         address_key = bip32_mst.ChildKey(0x8000002C).ChildKey(0x80000000).ChildKey(0x80000000).ChildKey(0)

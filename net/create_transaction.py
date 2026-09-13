@@ -264,8 +264,15 @@ def build_transaction(arguments: argparse.Namespace) -> str:
         raise TransactionError("--txid must be hexadecimal") from error
     if len(txid) != 32:
         raise TransactionError("--txid must be exactly 32 bytes (64 hex characters)")
-    if vout < 0 or input_sats <= 0 or arguments.amount_sats <= 0 or arguments.fee_sats < 0:
+    if vout < 0 or input_sats <= 0 or arguments.fee_sats < 0:
         raise TransactionError("vout, amounts, and fee must be non-negative; amounts must be positive")
+    
+    # Auto-calculate amount_sats if not provided (send all available funds minus fee)
+    if arguments.amount_sats is None:
+        arguments.amount_sats = input_sats - arguments.fee_sats
+    
+    if arguments.amount_sats <= 0:
+        raise TransactionError("amount must be positive")
     if input_sats < arguments.amount_sats + arguments.fee_sats:
         raise TransactionError("input value is smaller than amount plus fee")
 
@@ -319,10 +326,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--input-sats", type=int, help="UTXO value in satoshis. Auto-fetched from mempool.space if not provided")
     parser.add_argument("--utxo-index", type=int, default=0, help="Index of UTXO to use when auto-fetching (default: 0, largest value UTXO)")
     parser.add_argument("--destination", required=True, help="Recipient P2PKH or P2WPKH address")
-    parser.add_argument("--amount-sats", required=True, type=int, help="Amount to recipient in satoshis")
-    parser.add_argument("--fee-sats", required=True, type=int, help="Miner fee in satoshis")
+    parser.add_argument("--amount-sats", type=int, default=None, help="Amount to recipient in satoshis (default: all available funds minus fee)")
+    parser.add_argument("--fee-sats", type=int, default=1000, help="Miner fee in satoshis (default: 1000)")
     parser.add_argument("--change-address", help="P2PKH/P2WPKH change address; defaults to --source")
-    parser.add_argument("--network", choices=("mainnet", "testnet"), default="mainnet")
+    parser.add_argument("--network", choices=("mainnet", "testnet"), default="testnet")
     return parser
 
 
