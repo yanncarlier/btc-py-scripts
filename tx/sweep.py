@@ -4,6 +4,7 @@ sweep.py: Programmatically transfer all bitcoin from a private key to a destinat
 """
 
 import sys
+import argparse
 from bit import PrivateKeyTestnet, PrivateKey
 
 
@@ -39,12 +40,10 @@ def sweep_funds(wif_key: str, destination_address: str, testnet: bool = False):
 
 
 if __name__ == "__main__":
-    # Configuration parameters
-    # Replace these with your actual WIF private key and destination address
-    PRIVATE_KEY_WIF = "YOUR_PRIVATE_KEY_IN_WIF_FORMAT"
-    DEST_ADDRESS = "DESTINATION_BITCOIN_ADDRESS"
-    IS_TESTNET = (
-        False  # Set to True if you are using testnet coins/keys
-    )
+    parser = argparse.ArgumentParser(description="Programmatically transfer all bitcoin from a private key to a destination address.")
+    parser.add_argument("wif_key", help="The WIF format private key of the source address")
+    parser.add_argument("dest_address", help="The destination Bitcoin address")
+    parser.add_argument("--testnet", action="store_true", help="Use testnet instead of mainnet")
+    args = parser.parse_args()
 
-    sweep_funds(PRIVATE_KEY_WIF, DEST_ADDRESS, testnet=IS_TESTNET)
+    sweep_funds(args.wif_key, args.dest_address, testnet=args.testnet)
