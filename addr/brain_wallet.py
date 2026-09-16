@@ -16,6 +16,7 @@ Security: As before, remember the security caveats. Brain wallets are not recomm
 Testing: Always test the generated keys in a test environment or with very small amounts before using them in production scenarios.
 This script should now provide you with a valid WIF private key along with the Bitcoin address. Remember, for actual use, secure your passphrase meticulously, and consider using established wallet software or hardware for better security.
 '''
+import argparse
 import hashlib
 import base58
 from cryptography.hazmat.primitives.asymmetric import ec
@@ -73,8 +74,14 @@ def brain_wallet(passphrase):
     
     return wif, address
 
-# Example usage
-passphrase = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about"  # Never use such simple passphrases in real life!
-wif, bitcoin_address = brain_wallet(passphrase)
-print(f"WIF Private Key: {wif}")
-print(f"Bitcoin Address: {bitcoin_address}")
+def main():
+    parser = argparse.ArgumentParser(description="Generate a Bitcoin brain wallet from a passphrase.")
+    parser.add_argument("passphrase", help="The passphrase to generate the wallet from")
+    args = parser.parse_args()
+
+    wif, bitcoin_address = brain_wallet(args.passphrase)
+    print(f"Bitcoin Address: {bitcoin_address}")
+    print(f"WIF Private Key: {wif}")
+
+if __name__ == "__main__":
+    main()
