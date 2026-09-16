@@ -2,6 +2,8 @@
 Generates legacy P2PKH (Pay-to-Public-Key-Hash) Bitcoin address.
 BIP32 itself doesn’t specify a purpose but is often used directly for custom paths.
 '''
+import json
+
 from mnemonic import Mnemonic
 from bip32utils import BIP32Key, BIP32_HARDEN
 from derivation_cli import parse_derivation_arguments
@@ -18,15 +20,12 @@ try:
     if not mnemo.check(mnemonic):
         raise ValueError("Invalid mnemonic phrase provided. Please check the words and try again.")
 
-    print("Mnemonic Phrase:", mnemonic)
-    print("Passphrase:", passphrase if passphrase else "<empty>")
-
 
     # Convert mnemonic to seed (with empty passphrase)
     seed = mnemo.to_seed(mnemonic, passphrase=passphrase)
-    print("Seed (hex):", seed.hex())
+    account_xpub = None
+    addresses = []
 
-    print("Generating legacy P2PKH (Pay-to-Public-Key-Hash) Addresses:")
 
     # Generate BIP32 root key from the seed
     root_key = BIP32Key.fromEntropy(seed)
@@ -53,7 +52,7 @@ try:
 
             # Print the BIP32 Extended Public Key (xpub)
             account_xpub = address_key.ExtendedKey(private=False)  # Set private=False to get xpub
-            print("BIP32 Extended Public Key (xpub):", account_xpub)
+            pass
 
         # Extract required information
         derivation_path = f"m/0'/0/{i}"
@@ -63,13 +62,9 @@ try:
         wif = address_key.WalletImportFormat()
 
         # Print the output in the specified order
-        print("{")
-        print(f"derivation_path: {derivation_path}")
-        print(f"address: {address}")
-        print(f"public_key: {public_key}")
-        print(f"private_key: {private_key}")
-        print(f"wif: {wif}")
-        print("},")
+        addresses.append({"derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
+
+    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed.hex(), "address_type": "MultiBit Classic P2PKH", "account_extended_public_key": account_xpub, "addresses": addresses}, indent=2))
 
 except ValueError as e:
     print(f"Error: {e}")

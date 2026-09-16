@@ -3,6 +3,8 @@ Generates Electrum-style P2PKH (Pay-to-Public-Key-Hash) Bitcoin addresses.
 Electrum uses the derivation path: m/0'/n
 This is a simplified HD wallet structure used by Electrum.
 '''
+import json
+
 from bip_utils import (
     Bip39SeedGenerator,
     Bip39MnemonicValidator,
@@ -34,19 +36,16 @@ try:
     if not Bip39MnemonicValidator().IsValid(mnemonic):
         raise ValueError("Invalid mnemonic phrase provided. Please check the words and try again.")
 
-    print("Mnemonic Phrase:", mnemonic)
-    print("Passphrase:", passphrase if passphrase else "<empty>")
-
     # Generate seed from mnemonic with passphrase
     seed_bytes = Bip39SeedGenerator(mnemonic).Generate(passphrase=passphrase)
 
     # Display the generated seed (in hex)
-    print("Seed (hex):", seed_bytes.hex())
+    account_xpub = None
+    addresses = []
 
     # Generate BIP32 master key from seed
     bip32_mst = Bip32Secp256k1.FromSeed(seed_bytes)
 
-    print("Generating Electrum-style P2PKH Addresses (m/0'/n):")
 
     # Generate a set number of addresses
     for i in range(num_addresses):
@@ -56,7 +55,7 @@ try:
         # Print the BIP32 Extended Public Key for the first address
         if i == 0:
             account_xpub = address_key.PublicKey().ToExtended()
-            print("BIP32 Extended Public Key (xpub):", account_xpub)
+            pass
 
         # Construct derivation path
         derivation_path = f"m/0'/{i}"
@@ -68,13 +67,9 @@ try:
         wif = compute_wif(address_key.PrivateKey().Raw().ToBytes())
 
         # Print the output in the specified order
-        print("{")
-        print(f"derivation_path: {derivation_path}")
-        print(f"address: {address}")
-        print(f"public_key: {public_key}")
-        print(f"private_key: {private_key}")
-        print(f"wif: {wif}")
-        print("},")
+        addresses.append({"derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
+
+    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed_bytes.hex(), "address_type": "Electrum-style P2PKH", "account_extended_public_key": account_xpub, "addresses": addresses}, indent=2))
 
 except MnemonicChecksumError as e:
     print(f"Error: Invalid mnemonic checksum. Details: {e}")

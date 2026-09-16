@@ -3,6 +3,8 @@ Generates both Native SegWit (BIP44, P2WPKH) and
 Wrapped SegWit (BIP49, P2SH-P2WPKH) Bitcoin addresses.
 BIP49 (Wrapped SegWit, P2SH-P2WPKH) uses 49'.
 '''
+import json
+
 from bip_utils import (
     Bip39SeedGenerator,
     Bip39MnemonicValidator,
@@ -24,14 +26,8 @@ try:
     if not Bip39MnemonicValidator().IsValid(mnemonic):
         raise ValueError("Invalid mnemonic phrase provided. Please check the words and try again.")
     
-    print("Mnemonic Phrase:", mnemonic)
-    print("Passphrase:", passphrase if passphrase else "<empty>")
-
     # Generate seed from mnemonic with passphrase
     seed_bytes = Bip39SeedGenerator(mnemonic).Generate(passphrase=passphrase)
-
-    # Display the generated seed (in hex)
-    print("Seed (hex):", seed_bytes.hex())
 
     # Number of addresses to generate
     # Generate Native SegWit (P2WPKH) addresses using BIP44
@@ -60,14 +56,12 @@ try:
     # print("\n")
 
     # Generate Wrapped SegWit (P2SH-P2WPKH) addresses using BIP49
-    print("Generating Wrapped SegWit (P2SH-P2WPKH) Addresses:")
     bip49_mst_ctx = Bip49.FromSeed(seed_bytes, Bip49Coins.BITCOIN)
     bip49_acc_ctx = bip49_mst_ctx.Purpose().Coin().Account(0)
 
     # Print the Account Extended Public Key
     account_xpub = bip49_acc_ctx.PublicKey().ToExtended()
-    print("Account Extended Public Key:", account_xpub)
-
+    addresses = []
 
     for i in range(num_addresses):
         bip49_chg_ctx = bip49_acc_ctx.Change(Bip44Changes.CHAIN_EXT)
@@ -86,14 +80,22 @@ try:
         private_key = bip49_addr_ctx.PrivateKey().Raw().ToHex()
         wif = bip49_addr_ctx.PrivateKey().ToWif()
 
-        # Output in specified order
-        print("{")
-        print(f"derivation_path: {derivation_path}")
-        print(f"address: {address}")
-        print(f"public_key: {public_key}")
-        print(f"private_key: {private_key}")
-        print(f"wif: {wif}")
-        print("},")
+        addresses.append({
+            "derivation_path": derivation_path,
+            "address": address,
+            "public_key": public_key,
+            "private_key": private_key,
+            "wif": wif,
+        })
+
+    print(json.dumps({
+        "mnemonic_phrase": mnemonic,
+        "passphrase": passphrase,
+        "seed_hex": seed_bytes.hex(),
+        "address_type": "BIP49 P2SH-P2WPKH",
+        "account_extended_public_key": account_xpub,
+        "addresses": addresses,
+    }, indent=2))
 
 except MnemonicChecksumError as e:
     print(f"Error: Invalid mnemonic checksum. Details: {e}")
