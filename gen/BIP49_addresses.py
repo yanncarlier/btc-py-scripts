@@ -81,6 +81,7 @@ try:
         wif = bip49_addr_ctx.PrivateKey().ToWif()
 
         addresses.append({
+            "index": i,
             "derivation_path": derivation_path,
             "address": address,
             "public_key": public_key,

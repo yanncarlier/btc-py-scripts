@@ -55,7 +55,7 @@ try:
         private_key = bip86_addr_ctx.PrivateKey().Raw().ToHex()  # Private key in hex
         wif = bip86_addr_ctx.PrivateKey().ToWif()  # Private key in WIF format
 
-        addresses.append({"derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
+        addresses.append({"index": i, "derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
 
     print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed_bytes.hex(), "address_type": "BIP86 P2TR", "account_extended_public_key": account_xpub, "addresses": addresses}, indent=2))
 

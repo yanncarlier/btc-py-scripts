@@ -62,7 +62,7 @@ try:
         wif = address_key.WalletImportFormat()
 
         # Print the output in the specified order
-        addresses.append({"derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
+        addresses.append({"index": i, "derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
 
     print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed.hex(), "address_type": "MultiBit Classic P2PKH", "account_extended_public_key": account_xpub, "addresses": addresses}, indent=2))
 
