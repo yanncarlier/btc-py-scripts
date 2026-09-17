@@ -2,6 +2,15 @@
 
 Educational Python scripts for working with Bitcoin addresses, transactions, and blockchain data. 
 
+## Account 1, Bitcoin donation addresses:
+
+```
+# Send BTC directly to:
+"address": "bc1qmr2sm7fmejfaqcd0l067m75c8c8h46kq5uw70g"  
+"address": "bc1qa3tjj9fc7n0j3lnfuc56tqdhlqrt0uw0czrkm6"
+"address": "bc1qyu3zy7nasur5ju8hghs3kc3480h5rccs3fthfh"
+```
+
 ---
 
 ## Setup
