@@ -72,16 +72,23 @@ def brain_wallet(passphrase):
     bin_addr = hash2 + checksum
     address = base58.b58encode(bin_addr).decode('utf-8')
     
-    return wif, address
+    return {
+        "description": "Brain wallet (WARNING: Highly insecure, for educational purposes only)",
+        "address": address,
+        "public_key": public_key.hex(),
+        "private_key": private_key_bytes.hex(),
+        "wif": wif
+    }
+
+import json
 
 def main():
     parser = argparse.ArgumentParser(description="Generate a Bitcoin brain wallet from a passphrase.")
     parser.add_argument("passphrase", nargs="?", default="", help="The passphrase to generate the wallet from")
     args = parser.parse_args()
 
-    wif, bitcoin_address = brain_wallet(args.passphrase)
-    print(f"Bitcoin Address: {bitcoin_address}")
-    print(f"WIF Private Key: {wif}")
+    wallet_info = brain_wallet(args.passphrase)
+    print(json.dumps(wallet_info, indent=4))
 
 if __name__ == "__main__":
     main()
