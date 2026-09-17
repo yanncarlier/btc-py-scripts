@@ -55,25 +55,48 @@ def main() -> None:
     """Generate Bitcoin addresses of all derivation types from a BIP39 mnemonic."""
     parser = argparse.ArgumentParser(description="Generate Bitcoin addresses from a BIP39 mnemonic.")
     parser.add_argument(
-        "mnemonic",
-        nargs="?",
-        default=DEFAULT_MNEMONIC,
-        help="BIP39 mnemonic phrase (12 or 24 words). If omitted, uses a default test phrase.",
+        "values",
+        nargs="*",
+        metavar="COUNT_OR_MNEMONIC",
+        help=(
+            "Optional quoted mnemonic, or COUNT followed by an optional quoted mnemonic. "
+            "If omitted, uses a default test phrase."
+        ),
     )
     parser.add_argument(
         "-n", "--count",
         type=int,
-        default=1,
+        default=None,
         metavar="COUNT",
         help="Number of sequential addresses to generate per address type (default: 1).",
     )
     args = parser.parse_args()
 
-    if args.count < 1:
-        parser.error("--count must be a positive integer.")
+    count: int = args.count if args.count is not None else 1
+    mnemonic = DEFAULT_MNEMONIC
+    values: list[str] = args.values
 
-    mnemonic = args.mnemonic.strip()
-    count: int = args.count
+    if len(values) == 1:
+        if values[0].lstrip("+-").isdigit():
+            if args.count is not None:
+                parser.error("Specify the address count only once: as COUNT or with --count.")
+            count = int(values[0])
+        else:
+            mnemonic = values[0]
+    elif len(values) == 2:
+        if not values[0].lstrip("+-").isdigit():
+            parser.error("When supplying two positional arguments, the first must be COUNT.")
+        if args.count is not None:
+            parser.error("Specify the address count only once: as COUNT or with --count.")
+        count = int(values[0])
+        mnemonic = values[1]
+    elif len(values) > 2:
+        parser.error("Use an optional COUNT and one quoted mnemonic phrase.")
+
+    if count < 1:
+        parser.error("count must be a positive integer.")
+
+    mnemonic = mnemonic.strip()
 
     try:
         Bip39MnemonicValidator().Validate(mnemonic)
