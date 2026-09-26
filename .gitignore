@@ -795,3 +795,4 @@ __marimo__/
 .streamlit/secrets.toml
 
 notes.md
+gitignore

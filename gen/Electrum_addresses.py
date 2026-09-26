@@ -55,6 +55,7 @@ try:
         # Print the BIP32 Extended Public Key for the first address
         if i == 0:
             account_xpub = address_key.PublicKey().ToExtended()
+            account_xpriv = address_key.PrivateKey().ToExtended()
             pass
 
         # Construct derivation path
@@ -69,7 +70,7 @@ try:
         # Print the output in the specified order
         addresses.append({"index": i, "derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
 
-    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed_bytes.hex(), "address_type": "Electrum-style P2PKH", "account_extended_public_key": account_xpub, "addresses": addresses}, indent=2))
+    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed_bytes.hex(), "address_type": "Electrum-style P2PKH", "account_extended_public_key": account_xpub, "account_extended_private_key": account_xpriv, "addresses": addresses}, indent=2))
 
 except MnemonicChecksumError as e:
     print(f"Error: Invalid mnemonic checksum. Details: {e}")

@@ -34,6 +34,7 @@ try:
 
     # Print the Account Extended Public Key
     account_xpub = bip86_acc_ctx.PublicKey().ToExtended()
+    account_xpriv = bip86_acc_ctx.PrivateKey().ToExtended()
     addresses = []
 
     # Generate a set number of BIP86 addresses (Taproot, enabled by BIP341)
@@ -57,7 +58,7 @@ try:
 
         addresses.append({"index": i, "derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
 
-    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed_bytes.hex(), "address_type": "BIP86 P2TR", "account_extended_public_key": account_xpub, "addresses": addresses}, indent=2))
+    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed_bytes.hex(), "address_type": "BIP86 P2TR", "account_extended_public_key": account_xpub, "account_extended_private_key": account_xpriv, "addresses": addresses}, indent=2))
 
 except MnemonicChecksumError as e:
     print(f"Error: Invalid mnemonic checksum. Details: {e}")

@@ -61,6 +61,7 @@ try:
 
     # Print the Account Extended Public Key
     account_xpub = bip49_acc_ctx.PublicKey().ToExtended()
+    account_xpriv = bip49_acc_ctx.PrivateKey().ToExtended()
     addresses = []
 
     for i in range(num_addresses):
@@ -95,6 +96,7 @@ try:
         "seed_hex": seed_bytes.hex(),
         "address_type": "BIP49 P2SH-P2WPKH",
         "account_extended_public_key": account_xpub,
+        "account_extended_private_key": account_xpriv,
         "addresses": addresses,
     }, indent=2))
 

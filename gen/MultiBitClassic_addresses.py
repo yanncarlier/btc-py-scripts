@@ -52,6 +52,7 @@ try:
 
             # Print the BIP32 Extended Public Key (xpub)
             account_xpub = address_key.ExtendedKey(private=False)  # Set private=False to get xpub
+            account_xpriv = address_key.ExtendedKey(private=True)
             pass
 
         # Extract required information
@@ -64,7 +65,7 @@ try:
         # Print the output in the specified order
         addresses.append({"index": i, "derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
 
-    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed.hex(), "address_type": "MultiBit Classic P2PKH", "account_extended_public_key": account_xpub, "addresses": addresses}, indent=2))
+    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed.hex(), "address_type": "MultiBit Classic P2PKH", "account_extended_public_key": account_xpub, "account_extended_private_key": account_xpriv, "addresses": addresses}, indent=2))
 
 except ValueError as e:
     print(f"Error: {e}")

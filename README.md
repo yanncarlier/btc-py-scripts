@@ -33,9 +33,9 @@ uv pip install -r requirements.txt
 ### Generate a New Mnemonic
 
 ```bash
-python gen/generate_mnemonic.py
+python gen/Generate_mnemonic.py
 # Or to generate a 24-word mnemonic (256-bit strength):
-python gen/generate_mnemonic.py -s 256
+python gen/Generate_mnemonic.py -s 256
 ```
 
 Outputs an English BIP39 mnemonic, seed, and BIP32 root key. The default is a 12-word mnemonic (128-bit strength).

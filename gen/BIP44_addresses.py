@@ -29,6 +29,7 @@ try:
     bip44_acc_ctx = bip44_mst_ctx.Purpose().Coin().Account(0)
 
     account_xpub = bip44_acc_ctx.PublicKey().ToExtended()
+    account_xpriv = bip44_acc_ctx.PrivateKey().ToExtended()
     addresses = []
 
     # Generate a set number of addresses
@@ -70,6 +71,7 @@ try:
                 "seed_hex": seed_bytes.hex(),
                 "address_type": "BIP44 P2PKH",
                 "account_extended_public_key": account_xpub,
+                "account_extended_private_key": account_xpriv,
                 "addresses": addresses,
             },
             indent=2,

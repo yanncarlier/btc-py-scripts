@@ -65,12 +65,13 @@ try:
         address = compute_p2pkh_address(address_key.PublicKey().RawCompressed().ToBytes())
         public_key = address_key.PublicKey().RawCompressed().ToHex()
         private_key = address_key.PrivateKey().Raw().ToHex()
+        account_xpriv = address_key.PrivateKey().ToExtended()
         wif = compute_wif(address_key.PrivateKey().Raw().ToBytes())
 
         # Print the output in the specified order
         addresses.append({"index": i, "derivation_path": derivation_path, "address": address, "public_key": public_key, "private_key": private_key, "wif": wif})
 
-    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed_bytes.hex(), "address_type": "BIP44 external chain P2PKH", "account_extended_public_key": account_xpub, "addresses": addresses}, indent=2))
+    print(json.dumps({"mnemonic_phrase": mnemonic, "passphrase": passphrase, "seed_hex": seed_bytes.hex(), "address_type": "BIP44 external chain P2PKH", "account_extended_public_key": account_xpub, "account_extended_private_key": account_xpriv, "addresses": addresses}, indent=2))
 
 except MnemonicChecksumError as e:
     print(f"Error: Invalid mnemonic checksum. Details: {e}")
