@@ -1,0 +1,142 @@
+[
+  {
+    "description": "Illustrative: pre-HD era P2PKH (Bitcoin Core 2009 had no mnemonic/HD; shown here as m \u2192 P2PKH)",
+    "base_path": "m",
+    "addresses": [
+      {
+        "index": null,
+        "derivation_path": "m",
+        "address": "1BZ9j3F7m4H1RPyeDp5iFwpR31SB6zrs19",
+        "public_key": "03d902f35f560e0470c63313c7369168d9d7df2d49bf295fd9fb7cb109ccee0494",
+        "private_key": "1837c1be8e2995ec11cda2b066151be2cfb48adf9e47b151d46adab3a21cdf67",
+        "wif": "Kx2nc8CerNfcsutaet3rPwVtxQvXuQTYxw1mSsfFHsWExJ9xVpLf"
+      }
+    ]
+  },
+  {
+    "description": "Electrum-style derivation",
+    "base_path": "m/0'",
+    "addresses": [
+      {
+        "index": 0,
+        "derivation_path": "m/0'/0",
+        "address": "1Q5FHbm75ZYDnHkGgBC2y8cCn8cTrqK37v",
+        "public_key": "03038c1b21ba6eb640c4d325fcd23e62e1740b05364e2f8cf4d02036e506ad2aec",
+        "private_key": "f8584fca931dcbcd653477c8df5d4668bdb60d2a65e85bf3e6d2bcda3e9471af",
+        "wif": "L5YThDEJG3rNw65MnNP3bv7zVNeKEiBvQz8PLVdxvi1W7FKVCjrB"
+      }
+    ]
+  },
+  {
+    "description": "Bitcoin Core-style HD derivation",
+    "base_path": "m/0'/0'",
+    "addresses": [
+      {
+        "index": 0,
+        "derivation_path": "m/0'/0'/0'",
+        "address": "16fWWdLokmpctATuim8q5SvAu1GR9prV5m",
+        "public_key": "026fe19b94967c5159c9afaf8eb2870abed5fa0405ae091e4abc69487f7660b8a1",
+        "private_key": "5698780109efd1fbd31b352bf28a67924b254fa67e3693319a742a42a265e506",
+        "wif": "Kz83MSSkKMCyVrehwTaG2bHyVhp8itNNKMBLAGkShLaV2xqoX2ZD"
+      }
+    ]
+  },
+  {
+    "description": "BIP44 Legacy P2PKH",
+    "base_path": "m/44'/0'/0'/0",
+    "addresses": [
+      {
+        "index": 0,
+        "derivation_path": "m/44'/0'/0'/0/0",
+        "address": "1LqBGSKuX5yYUonjxT5qGfpUsXKYYWeabA",
+        "public_key": "03aaeb52dd7494c361049de67cc680e83ebcbbbdbeb13637d92cd845f70308af5e",
+        "private_key": "e284129cc0922579a535bbf4d1a3b25773090d28c909bc0fed73b5e0222cc372",
+        "wif": "L4p2b9VAf8k5aUahF1JCJUzZkgNEAqLfq8DDdQiyAprQAKSbu8hf"
+      }
+    ]
+  },
+  {
+    "description": "MultiBit Classic-style derivation (approximate; MultiBit Classic used its own seed format, not BIP39)",
+    "base_path": "m/0'/0",
+    "addresses": [
+      {
+        "index": 0,
+        "derivation_path": "m/0'/0/0",
+        "address": "17871ErDqdevLTLWBH6WzjUc1EKGDQzCMA",
+        "public_key": "026666422d00f1b308fc7527198749f06fedb028b979c09f60d0348ef79c985e41",
+        "private_key": "e81fa7bb95cc6bee975bf675bfebbab4044c1390e6a00ae246e55c07e3cf835e",
+        "wif": "L4zvqB8Cme7xRmTWxQ6TVmQs7smCNKD1rfAKmYZx6DAqyLjm4sp4"
+      }
+    ]
+  },
+  {
+    "description": "BIP44 external-chain derivation via raw BIP32 (chain-level access)",
+    "base_path": "m/44'/0'/0'/0",
+    "addresses": [
+      {
+        "index": 0,
+        "derivation_path": "m/44'/0'/0'/0/0",
+        "address": "1LqBGSKuX5yYUonjxT5qGfpUsXKYYWeabA",
+        "public_key": "03aaeb52dd7494c361049de67cc680e83ebcbbbdbeb13637d92cd845f70308af5e",
+        "private_key": "e284129cc0922579a535bbf4d1a3b25773090d28c909bc0fed73b5e0222cc372",
+        "wif": "L4p2b9VAf8k5aUahF1JCJUzZkgNEAqLfq8DDdQiyAprQAKSbu8hf"
+      }
+    ]
+  },
+  {
+    "description": "MultiBit HD-style derivation",
+    "base_path": "m/0'/0",
+    "addresses": [
+      {
+        "index": 0,
+        "derivation_path": "m/0'/0/0'",
+        "address": "1Ecw6WNntSpgRMtMfdeCt72UzsTEbqq6As",
+        "public_key": "0235bd48208ff716538a9159eb52d5a227a54dea0738d4c6255ef8faf3b2af6236",
+        "private_key": "2985528070bf0af2c7c277ca434aa1524c306268962d5b9ce3cede317aac1161",
+        "wif": "KxcRRRs6QqrZSaL9UoWcLr6Jtnap2fsMDmoexdW7yPn28u3XpTrr"
+      }
+    ]
+  },
+  {
+    "description": "BIP49 Nested SegWit P2SH-P2WPKH",
+    "base_path": "m/49'/0'/0'/0",
+    "addresses": [
+      {
+        "index": 0,
+        "derivation_path": "m/49'/0'/0'/0/0",
+        "address": "37VucYSaXLCAsxYyAPfbSi9eh4iEcbShgf",
+        "public_key": "039b3b694b8fc5b5e07fb069c783cac754f5d38c3e08bed1960e31fdb1dda35c24",
+        "private_key": "508c73a06f6b6c817238ba61be232f5080ea4616c54f94771156934666d38ee3",
+        "wif": "KyvHbRLNXfXaHuZb3QRaeqA5wovkjg4RuUpFGCxdH5UWc1Foih9o"
+      }
+    ]
+  },
+  {
+    "description": "BIP84 Native SegWit P2WPKH",
+    "base_path": "m/84'/0'/0'/0",
+    "addresses": [
+      {
+        "index": 0,
+        "derivation_path": "m/84'/0'/0'/0/0",
+        "address": "bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu",
+        "public_key": "0330d54fd0dd420a6e5f8d3624f5f3482cae350f79d5f0753bf5beef9c2d91af3c",
+        "private_key": "4604b4b710fe91f584fff084e1a9159fe4f8408fff380596a604948474ce4fa3",
+        "wif": "KyZpNDKnfs94vbrwhJneDi77V6jF64PWPF8x5cdJb8ifgg2DUc9d"
+      }
+    ]
+  },
+  {
+    "description": "BIP86 Taproot P2TR",
+    "base_path": "m/86'/0'/0'/0",
+    "addresses": [
+      {
+        "index": 0,
+        "derivation_path": "m/86'/0'/0'/0/0",
+        "address": "bc1p5cyxnuxmeuwuvkwfem96lqzszd02n6xdcjrs20cac6yqjjwudpxqkedrcr",
+        "public_key": "03cc8a4bc64d897bddc5fbc2f670f7a8ba0b386779106cf1223c6fc5d7cd6fc115",
+        "private_key": "41f41d69260df4cf277826a9b65a3717e4eeddbeedf637f212ca096576479361",
+        "wif": "KyRv5iFPHG7iB5E4CqvMzH3WFJVhbfYK4VY7XAedd9Ys69mEsPLQ"
+      }
+    ]
+  }
+]
