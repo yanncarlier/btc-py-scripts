@@ -45,6 +45,7 @@ try:
     bip32_mst = Bip32Secp256k1.FromSeed(seed_bytes)
 
     # Print the BIP32 Root Extended Public Key
+    account_xpub = bip32_mst.PublicKey().ToExtended()
     account_xpriv = bip32_mst.PrivateKey().ToExtended()
     addresses = []
 
