@@ -1,13 +1,12 @@
 '''
-Derives from BIP32 raw path: m/44'/0'/0'/{i}
-Produces the reference addresses: 13KE..., 1Dod..., 19EGJ...
+BIP44 external chain with non-hardened index: m/44'/0'/0'/0/{i}
 '''
 import json
 from bip_utils import Bip39SeedGenerator, Bip39MnemonicValidator, Bip32Secp256k1, Hash160, Base58Encoder
 from bip_utils.utils.mnemonic import MnemonicChecksumError
 from derivation_cli import parse_derivation_arguments
 
-mnemonic, num_addresses = parse_derivation_arguments("Generate BIP44-derived P2PKH (raw m/44'/0'/0'/{i}).")
+mnemonic, num_addresses = parse_derivation_arguments("Generate BIP44 external chain index m/44'/0'/0'/0/{i}.")
 passphrase = ""
 
 def compute_p2pkh(pub_key_bytes):
@@ -22,14 +21,13 @@ try:
         raise ValueError("Invalid mnemonic phrase.")
     seed_bytes = Bip39SeedGenerator(mnemonic).Generate(passphrase=passphrase)
     bip32_mst = Bip32Secp256k1.FromSeed(seed_bytes)
-    # Raw derivation: m/44'/0'/0'/{i}
-    base_ctx = bip32_mst.ChildKey(0x8000002C).ChildKey(0x80000000).ChildKey(0x80000000)
+    base_ctx = bip32_mst.ChildKey(0x8000002C).ChildKey(0x80000000).ChildKey(0x80000000).ChildKey(0)
     account_xpub = base_ctx.PublicKey().ToExtended()
     account_xpriv = base_ctx.PrivateKey().ToExtended()
     addresses = []
     for i in range(num_addresses):
         addr_ctx = base_ctx.ChildKey(i)
-        derivation_path = f"m/44'/0'/0'/{i}"
+        derivation_path = f"m/44'/0'/0'/0/{i}"
         address = compute_p2pkh(addr_ctx.PublicKey().RawCompressed().ToBytes())
         public_key = addr_ctx.PublicKey().RawCompressed().ToHex()
         private_key = addr_ctx.PrivateKey().Raw().ToHex()
@@ -39,7 +37,7 @@ try:
         "mnemonic_phrase": mnemonic,
         "passphrase": passphrase,
         "seed_hex": seed_bytes.hex(),
-        "address_type": "BIP44 P2PKH (raw m/44'/0'/0'/{i})",
+        "address_type": "BIP44 external chain index",
         "account_extended_public_key": account_xpub,
         "account_extended_private_key": account_xpriv,
         "addresses": addresses
